@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>三消工作台-设置</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="css/bootstrap.min.css" />
+<link rel="stylesheet" href="css/bootstrap-responsive.min.css" />
+<link rel="stylesheet" href="css/colorpicker.css" />
+<link rel="stylesheet" href="css/datepicker.css" />
+<link rel="stylesheet" href="css/uniform.css" />
+<link rel="stylesheet" href="css/select2.css" />
+<link rel="stylesheet" href="css/matrix-iframe.css" />
+<link rel="stylesheet" href="css/matrix-media.css" />
+<link rel="stylesheet" href="css/bootstrap-wysihtml5.css" />
+<link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/font-awesome.4.6.0.css">
+
+<style>
+	.control-group .controls label{
+		display:inline-block;
+	}
+</style>
+</head>
+<script type="text/javascript">
+  function onSave(){
+    var fs = require('fs');
+    var root_path = document.getElementById('root_path').value;    
+    if (/\\sxjj$/.test(root_path) && /:\\/.test(root_path)) {
+      fs.exists(root_path+`\\frameworks\\runtime-src\\proj.win32`, function(exists) {  
+        if (exists) {
+          fs.writeFile('./root_path.info',root_path,function(err){
+              if(err){
+                alert("保存失败");
+              }else{
+                alert("保存成功");
+                window.close();
+              }
+          });
+        }else{
+          alert('根路径设置有误，请重新输入');
+        }
+      });
+    }else{
+      alert("根路径设置有误，请重新输入");
+    }
+  }
+</script>
+<body onselectstart="return false">
+
+<div id="content">
+  <div id="content-header">
+      <h1>路径设置</h1>
+  </div>
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span6">
+      <div class="widget-box">
+        <div class="widget-title"> <span class="icon"> <i class="fa fa-align-justify"></i> </span>
+          <h5>根路径设置</h5>
+        </div>
+        <div class="widget-content nopadding">
+          <form action="#" method="get" class="form-horizontal">
+            <div class="control-group">
+              <label class="control-label">项目根路径 :</label>
+              <div class="controls">
+                <input type="text" class="span11" id="root_path" placeholder="如：D:\sxjj" />
+              </div>
+            </div>
+            <div class="form-actions">
+              <!-- <button type="submit" class="btn btn-success">保存</button> -->
+              <a href="javascript:onSave()" class="btn btn-success">保存</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></div>
+
+<script src="js/jquery.min.js"></script> 
+<script src="js/jquery.ui.custom.js"></script> 
+<script src="js/bootstrap.min.js"></script> 
+<script src="js/bootstrap-colorpicker.js"></script> 
+<script src="js/bootstrap-datepicker.js"></script> 
+<script src="js/jquery.toggle.buttons.html"></script> 
+<script src="js/masked.js"></script> 
+<script src="js/jquery.uniform.js"></script> 
+<script src="js/select2.min.js"></script> 
+<script src="js/matrix.js"></script> 
+<script src="js/matrix.form_common.js"></script> 
+<script src="js/wysihtml5-0.3.0.js"></script> 
+<script src="js/jquery.peity.min.js"></script> 
+<script src="js/bootstrap-wysihtml5.js"></script> 
+<script>
+	$('.textarea_editor').wysihtml5();
+</script>
+<script type="text/javascript">
+    var fs = require('fs');
+    fs.readFile('./root_path.info', 'utf8', function(err, data){
+      if (err) {
+      }else{
+        document.getElementById('root_path').value = data;
+      }
+    });
+</script>
+</body>
+</html>

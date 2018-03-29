@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Matrix Admin</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="css/bootstrap.min.css" />
+<link rel="stylesheet" href="css/bootstrap-responsive.min.css" />
+<link rel="stylesheet" href="css/fullcalendar.css" />
+<link rel="stylesheet" href="css/matrix-iframe.css" />
+<link rel="stylesheet" href="css/matrix-media.css" />
+<link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/font-awesome.4.6.0.css">
+</head>
+<body>
+
+<div id="content">
+  <div id="content-header">
+      <h1>日历</h1>
+  </div>
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="widget-box widget-calendar">
+          <div class="widget-title"> <span class="icon"><i class="fa fa-calendar"></i></span>
+            <h5>带提醒的日历</h5>
+            <div class="buttons"> <a id="add-event" data-toggle="modal" href="#modal-add-event" class="btn btn-inverse btn-mini"><i class="fa fa-plus fa-white"></i> 添加新提醒</a>
+              <div class="modal hide" id="modal-add-event">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">×</button>
+                  <h3>添加新提醒</h3>
+                </div>
+                <div class="modal-body">
+                  <p>提醒内容:</p>
+                  <p>
+                    <input id="event-name" type="text" />
+                  </p>
+                </div>
+                <div class="modal-footer"> <a href="#" class="btn" data-dismiss="modal">取消</a> <a href="#" id="add-event-submit" class="btn btn-primary">添加</a> </div>
+              </div>
+            </div>
+          </div>
+          <div class="widget-content">
+            <div class="panel-left">
+              <div id="fullcalendar"></div>
+            </div>
+            <div id="external-events" class="panel-right">
+              <div class="panel-title">
+                <h5>拖拽提醒到日历</h5>
+              </div>
+              <div class="panel-content">
+                <div class="external-event ui-draggable label label-inverse">我的提醒 1</div>
+                <div class="external-event ui-draggable label label-inverse">我的提醒 2</div>
+                <div class="external-event ui-draggable label label-inverse">我的提醒 3</div>
+                <div class="external-event ui-draggable label label-inverse">我的提醒 4</div>
+                <div class="external-event ui-draggable label label-inverse">我的提醒 5</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/jquery.min.js"></script> 
+<script src="js/jquery.ui.custom.js"></script> 
+<script src="js/bootstrap.min.js"></script> 
+<script src="js/fullcalendar.min.js"></script> 
+<script src="js/matrix.js"></script> 
+<script src="js/matrix.calendar.js"></script>
+</body>
+</html>
