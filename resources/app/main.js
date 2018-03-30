@@ -1,5 +1,5 @@
 const electron = require('electron');
-const {app, BrowserWindow} = electron;
+const {app, BrowserWindow, globalShortcut} = electron;
 const path = require('path')
 const url = require('url')
 
@@ -30,6 +30,16 @@ function createWindow () {
     // when you should delete the corresponding element.
     win = null
   })
+
+  globalShortcut.register('CommandOrControl+Space', () => {
+    if (win.isMaximized()) {
+      win.minimize();
+    }else{
+      win.maximize();
+    }
+  });
+
+  win.maximize();
 }
 
 // This method will be called when Electron has finished
