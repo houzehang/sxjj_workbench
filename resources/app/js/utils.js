@@ -1,6 +1,12 @@
 const fs = require('fs');
 const path = require('path')
-
+/**
+ * 拷贝文件
+ * @param  {[type]}   srcPath [description]
+ * @param  {[type]}   tarPath [description]
+ * @param  {Function} cb      [description]
+ * @return {[type]}           [description]
+ */
 var copyFile = function(srcPath, tarPath, cb) {
   var rs = fs.createReadStream(srcPath)
   rs.on('error', function(err) {
@@ -23,6 +29,14 @@ var copyFile = function(srcPath, tarPath, cb) {
 
   rs.pipe(ws)
 }
+
+/**
+ * 拷贝文件夹
+ * @param  {[type]}   srcDir [description]
+ * @param  {[type]}   tarDir [description]
+ * @param  {Function} cb     [description]
+ * @return {[type]}          [description]
+ */
 var copyFolder = function(srcDir, tarDir, cb) {
 	console.log("[xuezike-debug-info] =========== srcDir "+ srcDir);
   fs.readdir(srcDir, function(err, files) {
@@ -62,15 +76,39 @@ var copyFolder = function(srcDir, tarDir, cb) {
     files.length === 0 && cb && cb()
   })
 };
+
+/**
+ * 替换某文件的某一行内容
+ */
+var _replaceOneLine = function(filePath,oldLine_unique,newLine,callback){
+  var fs = require('fs');
+  fs.readFile(filePath,"utf8",function(err,data){
+    if (err) {
+      callback && callback(err);
+    }else{
+      var arr = data.split('\n');
+      for(var i = 0,len = arr.length; i < len; i++){
+        if (new RegExp(oldLine_unique).test(arr[i]) ) {
+          arr[i] = newLine;
+        }
+      }
+      fs.writeFile(filePath,arr.join('\n'),function(_err){
+        if (_err) {
+          callback && callback(err);
+        }else{
+          callback();
+        }
+      });
+    }
+  });
+};
+
+
 module.exports = {	
 	copy:function(src,target,cb){
 		copyFolder(src,target,cb);
-	}
-
+	},
+  replaceOneLine:function(filePath,oldLine_unique,newLine,callback){
+    _replaceOneLine(filePath,oldLine_unique,newLine,callback);
+  }
 }
-
-
-
-var str = "d:\\sxjj"
-
-console.log("[xuezike-debug-info] ===========  "+ str.substr(0,str.length-4));
