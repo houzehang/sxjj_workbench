@@ -124,12 +124,30 @@
       }
     };
 
+    function __checkCheckboxClicked_Tutorial(){
+      fs.readFile(root_path+basecfg_path,'utf8',function(err, data){
+        !err && data.split('\n').map(function(line,index){
+            /m_isWithoutTutorial:/.test(line) && /true/.test(line) && document.getElementById('checkbox_1').click();
+        });
+      });
+    };
+
+    function __checkCheckboxClicked_Log(){
+      fs.readFile(root_path+logutil_path,'utf8',function(err, data){
+        !err && data.split('\n').map(function(line,index){
+            /log_flag:/.test(line) && /false/.test(line) && document.getElementById('checkbox_2').click();
+        });
+      });
+    };
+
     fs.readFile('./root_path.info', 'utf8', function(err, data){
       if (err) {
         root_path = '';
       }else{
         document.getElementById('root_path').value = data;
         root_path = data;
+        __checkCheckboxClicked_Tutorial();
+        __checkCheckboxClicked_Log();
       }
     });
 
@@ -162,7 +180,7 @@
         }else if (/3$/.test(checkbox.id)) {
         }
       }
-    }
+    };
 </script>
 </body>
 </html>
