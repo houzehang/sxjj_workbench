@@ -65,7 +65,13 @@
                   屏蔽新手引导（Debug版本）</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <label>
                   <input id="checkbox_2" type="checkbox" onclick="checkboxOnclick(this)" name="radios" />
-                  屏蔽调试打印（Debug版本）</label>&nbsp;&nbsp;
+                  屏蔽调试打印（Debug版本）</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <label style="margin-top: 12px">
+                  <input id="checkbox_3" type="checkbox" onclick="checkboxOnclick(this)" name="radios" />
+                  去模拟器黑边（Debug版本）</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <label style="margin-top: 12px">
+                  <input id="checkbox_4" type="checkbox" onclick="checkboxOnclick(this)" name="radios" />
+                  去调试控制台（Debug版本）</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               </div>
             </div>
           </form>
@@ -98,7 +104,8 @@
     var utils = require('./../js/utils.js');
     var root_path = '';
     var basecfg_path = '\\src\\gameconfig\\BaseConfig.js';
-    var logutil_path = '\\src\\fbcore\\utils\\LogUtils_JS.js'
+    var logutil_path = '\\src\\fbcore\\utils\\LogUtils_JS.js';
+    var simulator_path = '\\frameworks\\runtime-src\\Classes\\AppDelegate.cpp';
 
     function onSave(){
       var fs = require('fs');
@@ -139,6 +146,14 @@
         });
       });
     };
+    
+    function __checkCheckboxClicked_Log(){
+      fs.readFile(root_path+logutil_path,'utf8',function(err, data){
+        !err && data.split('\n').map(function(line,index){
+            /log_flag:/.test(line) && /false/.test(line) && document.getElementById('checkbox_2').click();
+        });
+      });
+    };
 
     fs.readFile('./root_path.info', 'utf8', function(err, data){
       if (err) {
@@ -167,6 +182,9 @@
             err && alert(err);
           });
         }else if (/3$/.test(checkbox.id)) {
+          utils.replaceOneLine(root_path+simulator_path,'createWithRect','        glview = cocos2d::GLViewImpl::createWithRect("FireBirdJS", Rect(0,0,750,1334), 0.5);',function(err){
+            err && alert(err);
+          });
         }
       }else{
         if (/1$/.test(checkbox.id)) {
@@ -178,6 +196,9 @@
             err && alert(err);
           });
         }else if (/3$/.test(checkbox.id)) {
+          utils.replaceOneLine(root_path+simulator_path,'createWithRect','        glview = cocos2d::GLViewImpl::createWithRect("FireBirdJS", Rect(0,0,2048,1920), 0.5);',function(err){
+            err && alert(err);
+          });
         }
       }
     };
