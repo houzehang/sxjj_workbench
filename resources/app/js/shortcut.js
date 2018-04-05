@@ -19,7 +19,7 @@ function __verifySrcPath(waitTime,cb){
 	    }
 	});
 }
-__verifySrcPath(1200);
+// __verifySrcPath(1200);
 
 function __getExtendProjPath(_path,idx){
 	_path = _path.toString();

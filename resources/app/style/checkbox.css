@@ -1,0 +1,17 @@
+@charset "utf-8";
+@font-face{font-family:poppin;src:url(poppin.eot);src:url(poppin.eot?#iefix) format("embedded-opentype"),url(poppin.ttf) format("truetype")};
+*{margin:0;padding:0;}
+body{ padding: 10px; background-color: #00374B; color: #fff; font-family: poppin,'PingFang SC',Tahoma,Arial,\5FAE\8F6F\96C5\9ED1,sans-serif; letter-spacing: 2px; font-size: 12px; box-sizing: border-box; }
+h1{font-size:15px; font-weight:normal}
+.box{max-width:500px; margin:0 auto;}
+.clearfix{clear:both;}
+/*check*/
+input[type="checkbox"],input[type="radio"]{margin:0;opacity:0;filter: alpha(opacity=0);}
+input:focus{ outline:none}
+#checkbox p{cursor:pointer;margin-top: 10px;}
+.check_span,.radio_span{ display:inline-block; float:left; border:1px solid #35a48e;width:14px;height:14px; text-align:center;margin-right:10px;margin-top: 7px}
+.check_span:hover,.radio_span:hover{ border-color:#fff;}
+.check_span--checked,.radio_span--checked{border-color: #fff;background: url(icon_sprites.png);}
+.radio_span{width:15px;height:15px;border:0;background:url(icon_sprites.png) -14px 0;}
+.radio_span--checked{ background-position:-29px 0;border:0;}
+.radio_box{border-top:1px dashed #84decc; margin-top:20px;padding-top:15px;}

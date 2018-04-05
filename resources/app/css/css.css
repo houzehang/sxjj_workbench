@@ -36,7 +36,7 @@ body{height:100%;font:12px/1.8 Microsoft YaHei,simsong;height:100%;overflow:hidd
 .desktop-view:active{background-position:-46px 0}
 
 /*桌面*/
-#desk{position:absolute;top:0;bottom:30px;width:100%;overflow:hidden;*z-index:2}
+#desk{position:absolute;top:0;bottom:30px;width:40%;overflow:hidden;*z-index:2}
 /*for IE6*/
 *html #desk{
     height:expression((function(el){
