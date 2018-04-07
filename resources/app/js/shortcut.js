@@ -13,9 +13,11 @@ function __verifySrcPath(waitTime,cb){
 			cb && cb();
 	    }else{
 	    	console.log("[xuezike-debug-info] =========== not found "+ "");
-			setTimeout(function(){
-				window.open('./extends/electron_form.html');
-			},waitTime);
+			// setTimeout(function(){
+			// 	window.open('./extends/electron_form.html');
+			// },waitTime);
+
+			alert('请设置正确的项目根目录');
 	    }
 	});
 }
