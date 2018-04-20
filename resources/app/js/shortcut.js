@@ -1,6 +1,6 @@
 const utils = require(__dirname+'\\js\\utils.js');
 const fs = require('fs');
-const exec = require('child_process').execFile;
+const child_process = require('child_process');
 
 
 var root_path = '';
@@ -30,10 +30,10 @@ function __getExtendProjPath(_path,idx){
 
 ////======== 一、桌面图标配置(1.名称 2.图标资源路径 3.绑定方法名称) ========
 var shortcut = [
-[0,"模拟器Ⅱ","images/icos/wb.png","copyReleaseToProj2"],
-[1,"模拟器Ⅲ","images/icos/wb.png","copyReleaseToProj3"],
-[2,"模拟器Ⅳ","images/icos/wb.png","copyReleaseToProj4"],
-[3,"模拟器Ⅴ","images/icos/wb.png","copyReleaseToProj5"],
+	[0,"模拟器Ⅱ","images/icos/wb.png","copyReleaseToProj2"],
+	[1,"模拟器Ⅲ","images/icos/wb.png","copyReleaseToProj3"],
+	[2,"模拟器Ⅳ","images/icos/wb.png","copyReleaseToProj4"],
+	[3,"模拟器Ⅴ","images/icos/wb.png","copyReleaseToProj5"],
 ];
 
 ////======== 二、桌面图标绑定事件实现 ========
@@ -53,7 +53,7 @@ var FuncMap = {
 	},
     __copyReleaseToProj:function(idx){
     	var __runProj2 = function(){
-		   exec(__getExtendProjPath(root_path,idx)+'\\FireBirdJS'+idx+'.exe', function(err, data) {  
+		    child_process.execFile(__getExtendProjPath(root_path,idx)+'\\FireBirdJS'+idx+'.exe', function(err, data) {  
 		        console.log(err)
 		        console.log(data.toString());                       
 		    });  
@@ -107,9 +107,30 @@ var FuncMap = {
 			});
     	};
 
+    	var __copy_src_res = function(){
+    		var temp_index = 0;
+    		var __tryToRun = function(status){
+		        if (!status || status == 200) {
+		        	temp_index++;
+		        	if (temp_index == 2) {
+				        $("body").mLoading('hide');
+				        __runProj2();
+		        	}
+		        }else{
+		        	__verifySrcPath(0,__verifyTargetPath);
+		        }
+    		}
+	        utils.copy(root_path+`\\src`,__getExtendProjPath(root_path,idx)+`\\src`,__tryToRun);
+	        utils.copy(root_path+`\\res`,__getExtendProjPath(root_path,idx)+`\\res`,__tryToRun);
+    	};
 
-        __verifySrcPath(0,__verifyTargetPath);
+    	fs.exists(__getExtendProjPath(root_path,idx)+'\\FireBirdJS'+idx+'.exe', function(exists) { 
+    		if (exists) {
+    			__copy_src_res();
+    		}else{
+    			__verifySrcPath(0,__verifyTargetPath);
+    		}
+    	});
     }
 }
-////======== 三、根路径读取 ========
 
