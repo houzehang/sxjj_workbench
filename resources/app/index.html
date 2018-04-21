@@ -30,7 +30,8 @@
             .jq22-search-form .search-hd .pholder{display: inline-block;padding: 2px 0;font-size: 12px;color: #999;position: absolute;left: 3px;top: 8px;z-index: 4;padding-left:13px;#top:11px;vertical-align: middle;}
             .jq22-search-form .search-hd .s2,.jq22-search-form .search-hd #s2{display: none;}
             .jq22-search-form .search-bg{width: 215px;height: 31px;background-color: #fff;position: absolute;left: 3px;top: 3px;z-index: 1;}
-        
+
+            textarea { width: 600px; background-color: #fff; height: 300px; padding-top: 10px; padding-right: 10px; padding-left: 10px; padding-bottom: 10px; overflow: auto; color: 000; font-size: 16px; }
         </style>
 
         <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
@@ -67,7 +68,7 @@
 
     </head>
 
-    <body id="lxcn" onselectstart="return false" style="background-color: #123">
+    <body id="lxcn"  style="background-color: #123">
         <h2 style="width:100%; color: #fff; position:absolute; top:20px; text-align:center; z-index:1000; ">按 Ctrl + Space 显示/隐藏窗口</h2>
 <!--         <div id="task-bar">
 
@@ -112,6 +113,18 @@
                 <p><span class="check_span"><input type="checkbox" id="checkbox_3"/></span> 去掉模拟器黑边</p> 
                 <!-- <p><span class="check_span"><input type="checkbox" id="checkbox_4"/></span> 关闭黑框输出窗口</p>  -->
             </div>
+            <h3 style="margin-top: 200px;">自动补全的内容</h3>
+
+            <textarea type="text" id="text" class="text" style="width: 350px;height: 300px;"></textarea>
+            <h3>缩写快捷短语</h3>
+
+            <div class="jq22-search-form">
+                <div id="search-hd" class="search-hd">
+                    <div class="search-bg"></div>
+                    <input type="text" id="input_snippet" class="search-input" placeholder="fori" >
+                    <button class="btn-search" id="button_snippet" style="letter-spacing: 3px;" value="添加">添加</button>
+                </div>
+            </div>
 
         </div>
 
@@ -125,6 +138,22 @@
             $(function(){
                 $("#checkbox").selectCheck();
             });
+        </script>
+
+        <script src="js/auto-line-number.js"></script>
+
+        <script>
+            $("#text").setTextareaCount({
+                width: "30px",
+                bgColor: "#000",
+                color: "#FFF",
+                display: "inline-block"
+            });
+
+            $('textarea').attr('placeholder',`//示例：
+for(var i = 0; i \< \${1:10}; i++){
+    console.log('Hello '+\${2:'World'});
+}`);
         </script>
 
     </body>
