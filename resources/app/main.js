@@ -33,7 +33,11 @@ function createWindow () {
 
   globalShortcut.register('CommandOrControl+Space', () => {
     if (win.isMaximized()) {
-      win.minimize();
+      if (win.isFocused()){
+        win.minimize();
+      }else{
+        win.show();
+      }
     }else{
       win.maximize();
     }
