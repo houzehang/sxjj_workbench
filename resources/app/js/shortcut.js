@@ -1,6 +1,6 @@
 const utils = require(__dirname+'\\js\\utils.js');
 const fs = require('fs');
-const child_process = require('child_process');
+const exec = require('child_process').exec;
 
 
 var root_path = '';
@@ -53,10 +53,13 @@ var FuncMap = {
 	},
     __copyReleaseToProj:function(idx){
     	var __runProj2 = function(){
-		    child_process.execFile(__getExtendProjPath(root_path,idx)+'\\FireBirdJS'+idx+'.exe', function(err, data) {  
-		        console.log(err)
-		        console.log(data.toString());                       
-		    });  
+		    var cmdStr = 'start '+__getExtendProjPath(root_path,idx)+'\\FireBirdJS'+idx+'.exe';
+		    exec(cmdStr,function(err,stdout,stderr){});
+
+		    // child_process.execFile(__getExtendProjPath(root_path,idx)+'\\FireBirdJS'+idx+'.exe', function(err, data) {  
+		    //     console.log(err)
+		    //     console.log(data.toString());                       
+		    // });  
     	};
 
     	var __renameProj2 = function(){
