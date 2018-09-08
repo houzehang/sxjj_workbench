@@ -30,10 +30,10 @@ function __getExtendProjPath(_path,idx){
 
 ////======== 一、桌面图标配置(1.名称 2.图标资源路径 3.绑定方法名称) ========
 var shortcut = [
-	[0,"模拟器Ⅱ","images/icos/wb.png","copyReleaseToProj2"],
-	[1,"模拟器Ⅲ","images/icos/wb.png","copyReleaseToProj3"],
-	[2,"模拟器Ⅳ","images/icos/wb.png","copyReleaseToProj4"],
-	[3,"模拟器Ⅴ","images/icos/wb.png","copyReleaseToProj5"],
+	// [0,"模拟器Ⅱ","images/icos/wb.png","copyReleaseToProj2"],
+	// [1,"模拟器Ⅲ","images/icos/wb.png","copyReleaseToProj3"],
+	// [2,"模拟器Ⅳ","images/icos/wb.png","copyReleaseToProj4"],
+	// [3,"模拟器Ⅴ","images/icos/wb.png","copyReleaseToProj5"],
 ];
 
 ////======== 二、桌面图标绑定事件实现 ========
