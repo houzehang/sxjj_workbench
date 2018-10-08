@@ -1,0 +1,125 @@
+<html>
+ <head> 
+  <meta name="layout" content="main" /> 
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+  <script type="text/javascript" src="jquery-1.8.3.min.js"></script> 
+  <script type="text/javascript" src="html2canvas.js"></script> 
+  <script type="text/javascript">
+
+	var suofang = function(base64, bili, callback) {
+		console.log("执行缩放程序,bili=" + bili); //处理缩放，转格式	
+		var _img = new Image();
+		_img.src = base64;
+		_img.onload = function() {
+			var _canvas = document.createElement("canvas");
+			var w = this.width / bili;
+			var h = this.height / bili;
+			_canvas.setAttribute("width", w);
+			_canvas.setAttribute("height", h);
+			_canvas.getContext("2d").drawImage(this, 0, 0, w, h);
+			var base64 = _canvas.toDataURL("image/jpeg");
+			_canvas.toBlob(function(blob) {
+				console.log(blob.size);
+				if (blob.size > 1024 * 1024) {
+					suofang(base64, bili, callback);
+				} else {
+					callback(blob, base64);
+				}
+			}, "image/jpeg");
+		}
+	}
+
+	$(document).ready(function() {
+
+		var bRed = true;
+		var fontColor = bRed ? '#f00' : '#000';
+		var fs = require('fs');
+		document.getElementById('textArea').style.color = fontColor;
+		$(".button").on("click", function(event) {
+			event.preventDefault();
+			var shareContent = document.getElementById("textArea");
+			var width = shareContent.offsetWidth;
+			var height = shareContent.offsetHeight;
+			var canvas = document.createElement("canvas");
+			var scale = 8;
+			canvas.width = width * scale;
+			canvas.height = height * scale;
+			canvas.getContext("2d").scale(scale, scale);
+			var opts = {
+				allowTaint: true,
+				taintTest: false,
+				scale: scale,
+				canvas: canvas,
+				logging: true,
+				width: width,
+				height: height
+			};
+
+			var context = canvas.getContext('2d'); // 【重要】关闭抗锯齿        
+			context.mozImageSmoothingEnabled = false;
+			context.webkitImageSmoothingEnabled = false;
+			context.msImageSmoothingEnabled = false;
+			context.imageSmoothingEnabled = false;
+			context.fillStyle = '#f00';
+
+			html2canvas(shareContent, opts).then(function(canvas) {
+
+
+				let imageData = context.getImageData(0, 0, width * scale, height * scale),
+					data = imageData.data
+
+				for (let i = 0; i < data.length; i += 4) {
+					// 得到 RGBA 通道的值
+					let r = data[i],
+						g = data[i + 1],
+						b = data[i + 2],
+						a = data[i + 3]
+
+					if ([r, g, b].every(v => v < 256 && v > 100)) data[i + 3] = 0
+					if (!(r == 0 && g == 0 && b == 255)) {
+						// if (!bRed) data[i] = data[i] / 3;
+						// data[i + 1] = data[i + 1] / 3;
+						// data[i + 2] = data[i + 2] / 3;
+					}
+				}
+				// 将修改后的代码复制回画布中
+				context.putImageData(imageData, 0, 0)
+				canvas.id = "mycanvas"; //生成base64图片数据                              
+				var dataUrl = canvas.toDataURL();
+				var newImg = document.createElement("img");
+				newImg.src = dataUrl;
+				newImg.width = canvas.width / scale;
+				newImg.height = canvas.height / scale;
+				console.log("YOUSHI ============== canvas.height / scale" + (canvas.height / scale));
+
+				// ============= 保存图片到本地 =============
+
+
+				// suofang(dataUrl,scale,(_,dataUrl)=>{
+					var base64Data = dataUrl.replace(/^data:image\/\w+;base64,/, "");
+					var dataBuffer = new Buffer(base64Data, 'base64');
+					fs.writeFile("D:/outsubtitle3.png", dataBuffer, function(err) {
+						if(err){
+						  res.send(err);
+						  console.log("YOUSHI ============== err " + err);
+						}else{
+						  console.log("YOUSHI ============== 保存成功！");
+						}
+					});
+				// });
+
+				document.body.appendChild(newImg);
+			});
+		});
+	});
+  </script> 
+ </head> 
+ <body style="background-color: #fff; font-family:楷体 "> 
+  <div class="" style="background-color: white;">
+    测试图片 
+  </div> 
+  <h1 id="textArea" style="background-color: rgba(255,148,148,0); font-size: 72px;width:fit-content;width:-webkit-fit-content;width:-moz-fit-content;
+  height:fit-content;height:-webkit-fit-content;height:-moz-fit-content;">她看见日月<font style="color: rgb(0,0,255);">星辰</font>、看见鸟兽草木</h1> 
+  <input class="button" type="button" value="生成" /><br>
+ </body>
+</html>
